@@ -1,0 +1,63 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "AccessToken": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "Email": {
+    "dataSource": "EmailS"
+  },
+  "Role": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "dusers": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "app": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "resturant": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "table": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "queuing": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "comment": {
+    "dataSource": "mongodb",
+    "public": false
+  },
+  "container": {
+    "dataSource": "storage",
+    "public": true
+  }
+}

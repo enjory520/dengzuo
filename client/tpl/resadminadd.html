@@ -1,0 +1,89 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">添加餐厅经理</h1>
+</div>
+<div class="wrapper-md" ng-controller="ResAdminAddCtrl">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+  <tabset class="tab-container">
+    <tab heading="基础信息" select="steps.percent=50">
+      <p class="m-b">第一步：选择要创建经理的餐厅</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <h4>选择餐厅</h4>
+
+      <div class="form-validation">
+        <div class="row wrapper">
+          <div class="col-sm-3">
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <input type="text" class="input-sm form-control" placeholder="请输入要搜索的关键字" ng-model="searchKey" ng-change="change(this)"/>
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button" ng-click="search()">搜索</button>
+          </span>
+            </div>
+          </div>
+          <div class="col-sm-3">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped b-t b-light">
+            <thead>
+            <tr>
+              <th>店名</th>
+              <th>省</th>
+              <th>市</th>
+              <th>区</th>
+              <th>服务状态</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="i in dataList">
+              <td ng-bind="i.name"></td>
+              <td ng-bind="i.address.province"></td>
+              <td ng-bind="i.address.city"></td>
+              <td ng-bind="i.address.district"></td>
+              <td>
+                <a class="active">
+                  <i class="fa fa-check text-success" ng-class="{'text':!i.isserver,'text-active':i.isserver}"></i>
+                  <i class="fa fa-times text-danger" ng-class="{'text':i.isserver,'text-active':!i.isserver}"></i>
+                </a>
+              </td>
+              <td>
+                <button class="btn btn-success btn-sm" ng-click="add(i.id)">为其添加</button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </tab>
+
+    <tab heading="经理创建" disabled="!id" active="id" select="steps.percent=89">
+      <form name="creat">
+        <p class="m-b">
+          这一步您需要创建餐厅经理，以便其管理他的餐厅！
+        </p>
+        <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+        <p>餐厅经理用户名</p>
+        <input type="text" ng-model="resadmin.username" class="form-control" required/>
+
+        <p>餐厅经理密码</p>
+        <input type="text" ng-model="resadmin.password" class="form-control" required/>
+
+        <div class="m-t m-b">
+          <button type="button" ng-disabled="creat.$invalid" class="btn btn-default btn-rounded"
+                  ng-click="creatResAdmin()">创建
+          </button>
+
+          <button type="button" ng-disabled="isnotcreate" class="btn btn-success btn-rounded" ng-click="reload()">
+            继续添加经理
+          </button>
+        </div>
+
+      </form>
+
+
+    </tab>
+  </tabset>
+</div>

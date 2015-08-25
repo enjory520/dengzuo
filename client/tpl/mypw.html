@@ -1,0 +1,27 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">修改密码</h1>
+</div>
+<div class="wrapper-md" ng-controller="MyCtrlPassword">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+    <form name="from" class="form-validation">
+
+      <p>原始密码</p>
+      <input type="password" ng-model="admin.oldpassword" class="form-control" required/>
+      <br/>
+      <p>新密码</p>
+      <input type="password" ng-model="admin.newpassword" class="form-control" required/>
+
+      <br/>
+      <p>重复新密码</p>
+      <input type="password" name="confirm_foo" ng-model="admin.comfirmpassword" class="form-control" required ui-validate=" '$value==admin.newpassword' " ui-validate-watch=" 'admin.newpassword' "/>
+
+      <span ng-show='from.confirm_foo.$error.validator' style="color: red">两次密码输入不一致！</span>
+      <div class="m-t m-b">
+        <button type="button" ng-disabled="from.$invalid" class="btn btn-default btn-rounded"
+                ng-click="change()">确认修改
+        </button>
+      </div>
+    </form>
+
+</div>

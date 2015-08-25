@@ -1,0 +1,166 @@
+{
+  "name": "dusers",
+  "plural": "users",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "phone": {
+      "type": "string"
+    },
+    "wbid": {
+      "type": "string"
+    },
+    "nikename": {
+      "type": "string",
+      "required":true
+    },
+    "type": {
+      "type": "string",
+      "default": "member"
+    },
+    "push": {
+      "type": "Boolean",
+      "default": true,
+      "required":true
+    },
+    "headpic":{
+      "type":"string",
+      "default":"/img/a0.jpg",
+      "required":true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "queuings": {
+      "type": "hasMany",
+      "model": "queuing",
+      "foreignKey": "userid"
+    },
+    "resturants": {
+      "type": "belongsTo",
+      "model": "resturant",
+      "foreignKey": "resid"
+    },
+    "comments": {
+      "type": "hasMany",
+      "model": "comment",
+      "foreignKey": "userid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "login"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findPassword"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findPasswordRs"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__get__queuings"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__destroyById__queuings"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__create__comments"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "create_queuings"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "change_password"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "count"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__get__comments"
+    },{
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "member",
+      "permission": "ALLOW",
+      "property": "__findById__comments"
+    }
+  ],
+  "methods": {}
+}

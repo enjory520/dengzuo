@@ -1,0 +1,85 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">修改餐厅</h1>
+</div>
+<div class="wrapper-md" ng-controller="ResEditCtrl">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
+    <form name="from" class="form-validation">
+      <p>餐厅名称:</p>
+      <input type="text" name="name" class="form-control" ng-model="resinfo.name" required>
+
+      <p class="m-t">分店/所在分区:</p>
+      <input type="text" name="part" placeholder="例如：集美区" class="form-control" ng-model="resinfo.part" required>
+
+      <p class="m-t">LOGO: <strong style="color: red">{{error}}</strong></p>
+      <input type="file" style="visibility:hidden;height: 0;" name="logo" class="form-control" nv-file-select uploader="uploader"  ng-model="resinfo.logo" id="logo"
+             required >
+
+      <button ng-disabled="canSelectFile" onclick="$('#logo').click();" ng-click="clear()" class="btn m-b-xs btn-sm btn-info btn-addon" style="width:100%"><i class="fa fa-plus"></i>选择图片上传</button>
+
+      <progressbar value="uploader.queue[0].progress" class="progress-xxs"></progressbar>
+      <img ng-show="resinfo.logo" ng-src="{{resinfo.logo}}" height="100px" width="100px">
+
+      <p>经纬度:</p>
+
+      <div class="row">
+        <div class="col col-sm-6">
+          <label>经度(Longitude)</label>
+          <input type="text" ng-model="resinfo.position.lng" class="form-control" required/>
+        </div>
+        <div class="col col-sm-6">
+          <label>纬度(Latitude)</label>
+          <input type="text" ng-model="resinfo.position.lat" class="form-control" required/>
+        </div>
+      </div>
+      <p>具体位置：</p>
+
+      <div class="row">
+        <div class="col col-sm-4">
+          省：<select class="form-control" ng-model="resinfo.address.province"
+                    ng-options="key as key for (key,value) in division"
+                    ng-change="resinfo.address.city='';resinfo.address.district='';" required
+          >
+        </select>
+        </div>
+        <div class="col col-sm-4">
+          市：<select class="form-control" ng-model="resinfo.address.city"
+                    ng-options="key as key for (key,value) in division[resinfo.address.province]" required
+                    ng-change="resinfo.address.district='';">
+
+        </select>
+        </div>
+        <div class="col col-sm-4">
+          区：<select class="form-control" ng-model="resinfo.address.district" required
+                    ng-options="value as value for value in division[resinfo.address.province][resinfo.address.city]">
+        </select>
+        </div>
+      </div>
+      街道/门牌号：<input type="text" ng-model="resinfo.address.detail" class="form-control" required/>
+
+      <label class="checkbox i-checks m-l-md m-b-md">
+        <input type="checkbox" ng-model="resinfo.isserver" class="ng-pristine ng-valid"><i></i>正在提供服务？
+      </label>
+
+      <p>每日营业时间：</p>
+
+      <div class="row">
+        <div class="col col-sm-1">
+          <p>开始时间</p>
+          <timepicker ng-change="changeT(this)" ng-model="businesstimeS" show-meridian="false" mousewheel="false" required></timepicker>
+        </div>
+        <div class="col col-sm-1"></div>
+        <div class="col col-sm-1">
+          <p>结束时间</p>
+          <timepicker ng-change="changeT(this)" ng-model="businesstimeE" show-meridian="false" mousewheel="false" required></timepicker>
+        </div>
+      </div>
+
+      <div class="m-t m-b">
+        <button type="button" ng-disabled="from.$invalid" class="btn btn-default btn-rounded"
+                ng-click="change()">确认修改
+        </button>
+      </div>
+    </form>
+
+</div>
