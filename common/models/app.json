@@ -1,0 +1,45 @@
+{
+  "name": "app",
+  "plural": "appinfo",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "top": {
+      "type": "object"
+    },
+    "event": {
+      "type": "array"
+    },
+    "version": {
+      "type": "string"
+    },
+    "dowload":"string"
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findOne"
+    },{
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "upsert"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,223 @@
+{
+  "name": "resturant",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required":true
+    },
+    "part": {
+      "type": "string",
+      "description": "分店所在区",
+      "required":true
+    },
+    "position": {
+      "type": "GeoPoint",
+      "description": "经纬度（地理位置）",
+      "required":true
+    },
+    "businesstime": {
+      "type": {
+        "start":{
+          "h":"number",
+          "m":"number"
+        },
+        "end":{
+          "h":"number",
+          "m":"number"
+        }
+      },
+      "description": "营业实际（开始事件，结束时间） 例子9:30，20:10",
+      "required":true
+    },
+    "isserver": {
+      "type": "Boolean",
+      "description": "是否在服务状态",
+      "default":false
+    },
+    "address": {
+      "type": {
+        "province":"string",
+        "city":"string",
+        "district":"string",
+        "detail":"string"
+      },
+      "description": "具体地理位置",
+      "required":true
+    },
+    "logo":{
+      "type":"string",
+      "description":"店铺logo",
+      "required":true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "dusers": {
+      "type": "hasMany",
+      "model": "dusers",
+      "foreignKey": "resid"
+    },
+    "queuings": {
+      "type": "hasMany",
+      "model": "queuing",
+      "foreignKey": "resid"
+    },
+    "tables": {
+      "type": "hasMany",
+      "model": "table",
+      "foreignKey": "resid"
+    },
+    "comments": {
+      "type": "hasMany",
+      "model": "comment",
+      "foreignKey": "resid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "find"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "findById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__get__comments"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadminOrresmember",
+      "permission": "ALLOW",
+      "property": "__get__queuings"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadminOrresmember",
+      "permission": "ALLOW",
+      "property": "__get__tables"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resmember",
+      "permission": "ALLOW",
+      "property": "enter_one_queuing"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "__create__tables"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "__get__tables"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "count"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "__updateById__tables"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "reply"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "__delete__queuings"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "updateAttributes"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "deleteById"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__get__dusers"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__create__dusers"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__updateById__dusers"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__destroyById__dusers"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,25 @@
+<div class="container w-xl w-auto-xs" ng-controller="FindPassCtrl">
+  <a href class="navbar-brand block m-t">{{app.name}}</a>
+  <div class="m-b-lg">
+    <div class="wrapper text-center">
+      <strong>输入你的邮箱来重置你的密码！</strong>
+    </div>
+    <form name="reset" ng-init="isCollapsed=true;sending='发送'">
+      <div class="list-group list-group-sm">
+        <div class="list-group-item">
+          <input type="email" placeholder="邮箱地址" ng-model="email" class="form-control no-border" required>
+        </div>
+      </div>
+      <button type="submit" ng-disabled="reset.$invalid" class="btn btn-lg btn-primary btn-block"  
+   
+      ng-click="findpassword()" >{{sending}}</button>
+      <div class="text-center m-t m-b"><a ui-sref="access.signin">记起密码了？返回登录</a></div>
+    </form>
+    <div collapse="isCollapsed" class="m-t">
+      <div class="alert alert-success">
+        <p>一个链接将会发送到您的邮箱以便于您重置你的密码！<a ui-sref="access.signin" class="btn btn-sm btn-success">返回登录</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div>
+</div>

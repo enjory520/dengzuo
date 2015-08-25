@@ -1,0 +1,81 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">餐厅管理</h1>
+</div>
+<div class="wrapper-md" ng-controller="ResListCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      餐厅列表
+    </div>
+    <div class="row wrapper">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input type="text" class="input-sm form-control" placeholder="请输入要搜索的关键字" ng-model="searchKey">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button" ng-click="search()">搜索</button>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+        <tr>
+          <th>LOGO</th>
+          <th>店名</th>
+          <th>省</th>
+          <th>市</th>
+          <th>区</th>
+          <th>服务状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in dataList">
+          <td><img ng-src="{{i.logo}}" width="50px" height="50px"></td>
+          <td ng-bind="i.name"></td>
+          <td  ng-bind="i.address.province"></td>
+          <td  ng-bind="i.address.city"></td>
+          <td  ng-bind="i.address.district"></td>
+          <td>
+            <a class="active">
+              <i class="fa fa-check text-success" ng-class="{'text':!i.isserver,'text-active':i.isserver}"></i>
+              <i class="fa fa-times text-danger"  ng-class="{'text':i.isserver,'text-active':!i.isserver}"></i>
+            </a>
+          </td>
+          <td>
+            <a class="btn btn-info btn-sm" ng-click="goEdit(i.id)">编辑</a>
+            <button class="btn btn-danger btn-sm" ng-click="delete(i.id)">删除</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+        <!--<div class="col-sm-4 hidden-xs">-->
+        <!--<select class="input-sm form-control w-sm inline v-middle">-->
+        <!--<option value="0">Bulk action</option>-->
+        <!--<option value="1">Delete selected</option>-->
+        <!--<option value="2">Bulk edit</option>-->
+        <!--<option value="3">Export</option>-->
+        <!--</select>-->
+        <!--<button class="btn btn-sm btn-default">Apply</button>-->
+        <!--</div>-->
+        <div class="col-sm-8 text-letf">
+          <small class="text-muted inline m-t-sm m-b-sm">显示 {{page.pageFrom}}-{{page.pageTo}}项 总共 {{page.pageCount}} 项
+          </small>
+        </div>
+
+        <pagination ng-disabled = 'Paginationisdisabled'
+          boundary-links="true" total-items="page.pageCount" ng-model="page.currentPage" items-per-page="page.prpage" ng-change="change()"
+                    class="pagination-sm m-t-none m-b" previous-text="&lsaquo;" next-text="&rsaquo;"
+                    first-text="&laquo;" last-text="&raquo;"></pagination>
+      </div>
+    </footer>
+  </div>
+</div>

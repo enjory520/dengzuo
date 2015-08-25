@@ -1,0 +1,55 @@
+{
+  "name": "queuing",
+  "plural": "queuing",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "tag": {
+      "type": "string",
+      "description": "标签号",
+      "required": true
+    },
+    "createTime": {
+      "type": "Date"
+    },
+    "isEnter": {
+      "type": "Boolean",
+      "default": false
+    },
+    "enterTime": "Date",
+    "isComment": {
+      "type": "Boolean",
+      "default": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "user": {
+      "type": "belongsTo",
+      "model": "User",
+      "foreignKey": "userid"
+    },
+    "resturant": {
+      "type": "belongsTo",
+      "model": "resturant",
+      "foreignKey": "resid"
+    },
+    "table": {
+      "type": "belongsTo",
+      "model": "table",
+      "foreignKey": "tableid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,53 @@
+{
+  "name": "comment",
+  "plural": "comment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "content": {
+      "type": "string",
+      "description":"评论内容",
+      "required":true
+
+    },
+    "pic": {
+      "type": "array",
+      "description":"图片 最多6张"
+    },
+    "reply": {
+      "type": "object",
+      "description":"content:string,replytime:Date"
+    },
+    "createTime":"Date",
+    "stars":{
+      "type":"number",
+      "default":5,
+      "required":true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "resturant": {
+      "type": "belongsTo",
+      "model": "resturant",
+      "foreignKey": "resid"
+    },
+    "dusers": {
+      "type": "belongsTo",
+      "model": "dusers",
+      "foreignKey": "userid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

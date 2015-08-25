@@ -1,0 +1,60 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">餐厅经理管理</h1>
+</div>
+<div class="wrapper-md" ng-controller="ResAdminListCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      餐厅列表
+    </div>
+    <div class="row wrapper">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <input type="text" class="input-sm form-control" placeholder="请输入要搜索的关键字" ng-model="searchKey">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button" ng-click="search()">搜索</button>
+          </span>
+        </div>
+      </div>
+      <div class="col-sm-3">
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped b-t b-light">
+        <thead>
+        <tr>
+          <th width="30%">经理</th>
+          <th width="50%">店名</th>
+          <th width="20%">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="i in dataList">
+          <td  ng-bind="i.username"></td>
+          <td  ng-bind="i.resturants.name"></td>
+          <td>
+            <a class="btn btn-info btn-sm" ng-click="goEdit(i.resturants.id,i.id)">修改密码</a>
+            <button class="btn btn-danger btn-sm" ng-click="delete(i.resturants.id,i.id)">删除</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer class="panel-footer">
+      <div class="row">
+
+        <div class="col-sm-8 text-letf">
+          <small class="text-muted inline m-t-sm m-b-sm">显示 {{page.pageFrom}}-{{page.pageTo}}项 总共 {{page.pageCount}} 项
+          </small>
+        </div>
+
+        <pagination ng-disabled = 'Paginationisdisabled'
+          boundary-links="true" total-items="page.pageCount" ng-model="page.currentPage" items-per-page="page.prpage" ng-change="change()"
+                    class="pagination-sm m-t-none m-b" previous-text="&lsaquo;" next-text="&rsaquo;"
+                    first-text="&laquo;" last-text="&raquo;"></pagination>
+      </div>
+    </footer>
+  </div>
+</div>

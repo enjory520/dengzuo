@@ -1,0 +1,41 @@
+{
+  "name": "table",
+  "plural": "table",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "min": {
+      "type": "number",
+      "required":true
+    },
+    "max": {
+      "type": "number",
+      "required":true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "resturant": {
+      "type": "belongsTo",
+      "model": "resturant",
+      "foreignKey": "resid"
+    },
+    "queuings": {
+      "type": "hasMany",
+      "model": "queuing",
+      "foreignKey": "tableid"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    }
+  ],
+  "methods": {}
+}

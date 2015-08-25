@@ -1,0 +1,34 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongodb": {
+    "url": "mongodb://localhost:27017/dengzuo",
+    "name": "mongodb",
+    "connector": "mongodb"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  },
+  "EmailS": {
+    "name": "mail",
+    "defaultForType": "mail",
+    "connector": "mail",
+    "transports": [
+      {
+        "type": "SMTP",
+        "host": "smtp.mxhichina.com",
+        "secure": true,
+        "port": 465,
+        "auth": {
+          "user": "postmaster@abcgame.top",
+          "pass": "Rojer458702"
+        }
+      }
+    ]
+  }
+}

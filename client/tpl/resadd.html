@@ -1,0 +1,135 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">添加餐厅</h1>
+</div>
+<div class="wrapper-md" ng-controller="ResAddCtrl">
+  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+  <tabset class="tab-container">
+    <tab heading="基础信息" active="steps.step1" disabled="!steps.step1" select="steps.percent=10">
+      <p class="m-b">第一步：创建餐厅的基础信息</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+      <h4>基础信息</h4>
+
+      <form name="step1" class="form-validation">
+        <p>餐厅名称:</p>
+        <input type="text" name="name" class="form-control" ng-model="resinfo.name" required>
+
+        <p class="m-t">分店/所在分区:</p>
+        <input type="text" name="part" placeholder="例如：集美区" class="form-control" ng-model="resinfo.part" required>
+
+        <p class="m-t">LOGO: <strong style="color: red">{{error}}</strong></p>
+        <!-- <input type="file" nv-file-select uploader="uploader" name="logo" class="form-control" ng-model="resinfo.logo"
+               required ng-click="clear()" ng-disabled="canSelectFile"> -->
+      <input type="file" style="visibility:hidden;height: 0;" name="logo" class="form-control" nv-file-select uploader="uploader"  ng-model="resinfo.logo" id="logo"
+             required >
+
+      <button ng-disabled="canSelectFile" onclick="$('#logo').click();" ng-click="clear()" class="btn m-b-xs btn-sm btn-info btn-addon" style="width:100%"><i class="fa fa-plus"></i>选择图片上传</button>
+        <progressbar value="uploader.queue[0].progress" class="progress-xxs"></progressbar>
+        <img ng-show="resinfo.logo" ng-src="{{resinfo.logo}}" height="100px" width="100px">
+
+        <div class="m-t m-b">
+          <button type="submit" ng-disabled="step1.$invalid" class="btn btn-default btn-rounded" ng-click="createRes()">
+            创建并进入下一步
+          </button>
+        </div>
+      </form>
+    </tab>
+    <tab heading="地理位置信息" disabled="!steps.step2" active="steps.step2" select="steps.percent=30">
+      <form name="step2" class="form-validation">
+        <p class="m-b">第二步：创建位置信息，您可跳过本步骤，将信息交给餐厅经理自行填写</p>
+        <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+        <p>经纬度:</p>
+
+        <div class="row">
+          <div class="col col-sm-6">
+            <label>经度(Longitude)</label>
+            <input type="text" ng-model="resinfo.position.lng" class="form-control"/>
+          </div>
+          <div class="col col-sm-6">
+            <label>纬度(Latitude)</label>
+            <input type="text" ng-model="resinfo.position.lat" class="form-control"/>
+          </div>
+        </div>
+        <p>具体位置：</p>
+
+        <div class="row">
+          <div class="col col-sm-4">
+            省：<select class="form-control" ng-model="resinfo.address.province"
+                      ng-options="key as key for (key,value) in division"
+                      ng-change="resinfo.address.city='';resinfo.address.district='';"
+            >
+          </select>
+          </div>
+          <div class="col col-sm-4">
+            市：<select class="form-control" ng-model="resinfo.address.city"
+                      ng-options="key as key for (key,value) in division[resinfo.address.province]"
+                      ng-change="resinfo.address.district='';">
+
+          </select>
+          </div>
+          <div class="col col-sm-4">
+            区：<select class="form-control" ng-model="resinfo.address.district"
+                      ng-options="value as value for value in division[resinfo.address.province][resinfo.address.city]">
+          </select>
+          </div>
+        </div>
+        街道/门牌号：<input type="text" ng-model="resinfo.address.detail" class="form-control"/>
+
+        <div class="m-t m-b">
+          <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step3=true">跳过</button>
+          <button type="submit" class="btn btn-default btn-rounded"
+                  ng-click="changeinfo();steps.step3=true">下一步
+          </button>
+        </div>
+      </form>
+    </tab>
+    <tab heading="服务信息" disabled="!steps.step3" active="steps.step3" select="steps.percent=60">
+      <p class="m-b">第二步：创建营业信息，您可跳过本步骤，将信息交给餐厅经理自行填写</p>
+      <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+
+      <label class="checkbox i-checks m-l-md m-b-md">
+        <input type="checkbox" ng-model="resinfo.isserver" class="ng-pristine ng-valid"><i></i>
+        正在提供服务？
+      </label>
+      <p>每日营业时间：</p>
+      <div class="row">
+        <div class="col col-sm-1">
+          <p>开始时间</p>
+          <timepicker  ng-change="changeT(this)" ng-model="businesstimeS" show-meridian="false" mousewheel="false"></timepicker>
+        </div>
+        <div class="col col-sm-1"></div>
+        <div class="col col-sm-1">
+          <p>结束时间</p>
+          <timepicker  ng-change="changeT(this)" ng-model="businesstimeE" show-meridian="false" mousewheel="false"></timepicker>
+          </div>
+      </div>
+
+      <div class="m-t m-b">
+        <button type="button" class="btn btn-default btn-rounded" ng-click="steps.step4=true">跳过</button>
+        <button type="submit" class="btn btn-default btn-rounded"
+                ng-click="changeinfo();steps.step4=true;">下一步
+        </button>
+      </div>
+    </tab>
+
+    <tab heading="经理创建" disabled="!steps.step4" active="steps.step4" select="steps.percent=98">
+      <form name="step4">
+        <p class="m-b">
+          这一步您需要创建餐厅经理，以便其管理他的餐厅！
+        </p>
+        <progressbar value="steps.percent" class="progress-xs" type="success"></progressbar>
+        <p>餐厅经理用户名</p>
+        <input type="text" ng-model="resadmin.username" class="form-control" required/>
+        <p>餐厅经理密码</p>
+        <input type="text" ng-model="resadmin.password" class="form-control" required/>
+        <div class="m-t m-b">
+          <button type="button" ng-disabled="step4.$invalid" class="btn btn-default btn-rounded" ng-click="creatResAdmin()" >创建
+          </button>
+
+          <button type="button" ng-disabled="steps.step4isdis" class="btn btn-success btn-rounded" ng-click="reload()" >继续添加餐厅
+          </button>
+        </div>
+      </form>
+
+    </tab>
+  </tabset>
+</div>
