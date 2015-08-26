@@ -6,13 +6,12 @@
  *
  */
 
-var async = require('async'),
-    request = require('request'),
-    pkgcloud = require('../../../../pkgcloud'),
-    urlJoin = require('url-join'),
-    _ = require('underscore');
+var urlJoin = require('url-join');
 
 var portsResourcePath = '/ports';
+
+// Declaring variables for helper functions defined later
+var _convertPortToWireFormat;
 
 /**
  * client.getPorts
@@ -63,7 +62,7 @@ exports.getPort = function (port, callback) {
   this._request({
     path: urlJoin(portsResourcePath, portId),
     method: 'GET'
-  }, function (err, body, res) {
+  }, function (err, body) {
     if (err) {
       return callback(err);
     }
@@ -148,7 +147,7 @@ exports.destroyPort = function (port, callback) {
   this._request({
     path: urlJoin(portsResourcePath,portId),
     method: 'DELETE'
-  }, function (err, body, res) {
+  }, function (err) {
     if (err) {
       return callback(err);
     }

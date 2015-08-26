@@ -6,13 +6,12 @@
  *
  */
 
-var async = require('async'),
-    request = require('request'),
-    pkgcloud = require('../../../../pkgcloud'),
-    urlJoin = require('url-join'),
-    _ = require('underscore');
+var urlJoin = require('url-join');
 
 var networksResourcePath = '/networks';
+
+// Declaring variables for helper functions defined later
+var _convertNetworkToWireFormat;
 
 /**
  * client.getNetworks
@@ -63,7 +62,7 @@ exports.getNetwork = function (network, callback) {
   this._request({
     path: urlJoin(networksResourcePath, networkId),
     method: 'GET'
-  }, function (err, body, res) {
+  }, function (err, body) {
     if (err) {
       return callback(err);
     }
@@ -148,7 +147,7 @@ exports.destroyNetwork = function (network, callback) {
   this._request({
     path: urlJoin(networksResourcePath,networkId),
     method: 'DELETE'
-  }, function (err, body, res) {
+  }, function (err) {
     if (err) {
       return callback(err);
     }

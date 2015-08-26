@@ -12,63 +12,6 @@ module.exports = function (app) {
     }
 
 
-    //function isAdmin(userId, callback) {
-    //
-    //    duser.findById(userId, function (err, instance) {
-    //        if (err || !instance) {
-    //            if (callback) callback(err, false);
-    //            return;
-    //        }
-    //
-    //        console.log("验证权限admin：" + instance.email);
-    //        if (instance.type === 'admin') {
-    //            if (callback) callback(null, true);
-    //        } else {
-    //            if (callback) callback(null, false);
-    //        }
-    //    })
-    //
-    //
-    //}
-    //
-    //
-    //function isResAdmin(modelId, userId, callback) {
-    //    duser.findById(userId, function (err, instance) {
-    //        //console.log(err,instance,userId)
-    //        if (err || !instance) {
-    //            if (callback) callback(err, false);
-    //            return;
-    //        }
-    //        //console.log("验证权限resadmin：" + instance.email);
-    //        if (instance.type === 'resadmin' && matches(instance.resid, modelId)) {
-    //            if (callback) callback(null, true);
-    //        } else {
-    //            if (callback) callback(null, false);
-    //        }
-    //    })
-    //}
-    //
-    //function isResMember(modelId, userId, callback){
-    //    duser.findById(userId, function (err, instance) {
-    //        if (err || !instance) {
-    //            console.log('Model not found for id %j', modelId);
-    //            if (callback) callback(err, false);
-    //            return;
-    //        }
-    //
-    //        console.log("验证权限member：" + instance.email);
-    //
-    //        if (instance.type === 'member' && matches(modelId, userId)) {
-    //            if (callback) callback(null, true);
-    //        } else {
-    //            if (callback) callback(null, false);
-    //        }
-    //
-    //
-    //    })
-    //
-    //}
-
 
     function is(type, modelId, userId, callback) {
         if (!userId)
@@ -97,7 +40,7 @@ module.exports = function (app) {
                     temp = temp.name;
                 }
 
-                console.log("验证权限" + temp + "：" + instance.email);
+                //console.log("验证权限" + temp + "：" + instance.email);
 
                 if (instance.type === temp && flag) {
                     if (callback) callback(null, true);
@@ -198,32 +141,7 @@ module.exports = function (app) {
             flag: true
         }], modelId, userId, callback);
 
-        //
-        //isAdmin(userId, function (err, is) {
-        //
-        //    //console.log(err,is);
-        //    if (err)
-        //        return callback(err, is);
-        //
-        //    if (is) {
-        //        return callback(err, true)
-        //    }
-        //    else {
-        //
-        //
-        //
-        //        //console.log(modelClass,modelId);
-        //        if (!modelId)
-        //            return callback(null, false)
-        //
-        //
-        //        isResAdmin(modelId, userId, function (err, is) {
-        //            //console.log(err,is);
-        //            callback(err, is);
-        //        })
-        //    }
-        //})
-
+        
     })
 
     Role.registerResolver('adminOrresadminWithNoBelong', function (role, context, callback) {

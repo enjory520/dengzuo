@@ -60,7 +60,8 @@ module.exports = function (Resturant) {
   [
     'prototype.__get__dusers',
     'prototype.__updateById__dusers',
-    'prototype.__destroyById__dusers'
+    'prototype.__destroyById__dusers',
+    'prototype.__count__dusers'
 
   ]
     .forEach(function (temp) {
@@ -72,15 +73,47 @@ module.exports = function (Resturant) {
 
         //console.log(ctx.args.filter);
         if (!userAccessToken)
-          return next(new Error("非法访问"));
+          return next(new Error("非法访问  -  userAccessToken"));
 
         DUser.findById(userAccessToken.userId, function (err, ins) {
           if (err) return next(err);
           if (ins.type) {
+            var dotype = "";
             switch (ins.type) {
               case 'admin':
-                if (temp === 'prototype.__get__dusers') {
-                  ctx.args.filter = '{"where":{"type":"resadmin"}}';
+                dotype = 'resadmin';
+                break;
+              case 'resadmin':
+                dotype = 'resmember';
+                break;
+              default:
+                return next(new Error("非法访问 notfind"));
+            }
+            
+            
+            if (temp === 'prototype.__get__dusers') {
+                  var filter = ctx.args.filter;
+                  // console.log(ctx.args);
+                  try{
+                    var filterObj = {};
+                    if(filter) filterObj = JSON.parse(filter);
+                    if(filterObj.where){
+                      filterObj.where.type = dotype;
+                    }else{
+                      filterObj.where = {
+                        type:dotype
+                      };
+                    }
+                    
+                    ctx.args.filter = JSON.stringify(filterObj);
+                    
+                  }catch(e){
+                    console.log(e);
+                  }
+                  next();
+                }else if(temp == 'prototype.__count__dusers'){
+                   ctx.args.where = '{"type":"'+dotype+'"}';
+                   next();
                 }
                 else {
                   DUser.findById(ctx.args.fk, function (err, douser) {
@@ -90,41 +123,16 @@ module.exports = function (Resturant) {
                       return next(nexterr);
                     }
 
-                    if (douser.type !== 'resadmin') {
+                    if (douser.type !== dotype) {
                       var nexterr = new Error('您没有权限操作这个用户！');
                       nexterr.statusCode = 400;
                       return next(nexterr);
-
                     }
                     next();
                   })
                 }
-                break;
-              case 'resadmin':
-                if (temp === 'prototype.__get__dusers') {
-                  ctx.args.filter = '{"where":{"type":"resmember"}}';
-                } else {
-                  DUser.findById(ctx.args.fk, function (err, douser) {
-                    if (err || !douser) {
-                      var nexterr = new Error("非法访问");
-                      nexterr.statusCode = 400;
-                      return next(nexterr);
-                    }
-
-                    if (douser.type !== 'resmember') {
-                      var nexterr = new Error('您没有权限操作这个用户！');
-                      nexterr.statusCode = 400;
-                      return next(nexterr);
-
-                    }
-                    next();
-                  })
-
-                }
-                break;
-              default:
-                return next(new Error("非法访问"));
-            }
+                
+                
           } else {
             next(new Error("非法访问"));
           }
@@ -161,8 +169,6 @@ module.exports = function (Resturant) {
 
     var count = 0;
 
-    
-      //console.log(model);
       try{
         if (ctx.result) {
           var filter = JSON.parse(ctx.args.filter);

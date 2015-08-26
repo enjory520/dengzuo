@@ -6,13 +6,12 @@
  *
  */
 
-var async = require('async'),
-    request = require('request'),
-    pkgcloud = require('../../../../pkgcloud'),
-    urlJoin = require('url-join'),
-    _ = require('underscore');
+var urlJoin = require('url-join');
 
 var subnetsResourcePath = '/subnets';
+
+// Declaring variables for helper functions defined later
+var _convertSubnetToWireFormat;
 
 /**
  * client.getSubnets
@@ -66,7 +65,7 @@ exports.getSubnet = function (subnet, callback) {
   this._request({
     path: urlJoin(subnetsResourcePath, subnetId),
     method: 'GET'
-  }, function (err, body, res) {
+  }, function (err, body) {
     if (err) {
       return callback(err);
     }
@@ -151,7 +150,7 @@ exports.destroySubnet = function (subnet, callback) {
   this._request({
     path: urlJoin(subnetsResourcePath,subnetId),
     method: 'DELETE'
-  }, function (err, body, res) {
+  }, function (err) {
     if (err) {
       return callback(err);
     }

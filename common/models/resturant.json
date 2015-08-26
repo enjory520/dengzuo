@@ -170,6 +170,13 @@
       "property": "__delete__queuings"
     },
     {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "resadmin",
+      "permission": "ALLOW",
+      "property": "__destroyById__tables"
+    },
+    {
       "accessType": "*",
       "principalType": "ROLE",
       "principalId": "admin",
@@ -196,6 +203,21 @@
       "principalId": "adminOrresadmin",
       "permission": "ALLOW",
       "property": "__get__dusers"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__findById__dusers"
+    },
+    
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "adminOrresadmin",
+      "permission": "ALLOW",
+      "property": "__count__dusers"
     },
     {
       "accessType": "EXECUTE",
